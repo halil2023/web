@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sıralama Algoritmaları</title>
+<style>
+  body {
+    font-family: Arial;
+    background: #f0f0f0;
+    text-align: center;
+    margin-top: 50px;
+  }
+  input, button {
+    padding: 8px;
+    font-size: 16px;
+    margin: 5px;
+  }
+  #result {
+    margin-top: 20px;
+    font-size: 18px;
+    color: darkblue;
+  }
+</style>
+</head>
+<body>
+
+<h2>🔢 Sıralama Algoritması (Quick Sort)</h2>
+<p>Sayıları virgülle ayırarak giriniz:</p>
+<input type="text" id="numbers" placeholder="Örnek: 34,12,5,78,9">
+<button onclick="sirala()">Sırala</button>
+
+<div id="result"></div>
+
+<script>
+function quickSort(arr) {
+  if (arr.length <= 1) return arr;
+  const pivot = arr[arr.length - 1];
+  const left = arr.filter(x => x < pivot);
+  const right = arr.filter(x => x > pivot);
+  const equal = arr.filter(x => x === pivot);
+  return [...quickSort(left), ...equal, ...quickSort(right)];
+}
+
+function sirala() {
+  const input = document.getElementById('numbers').value;
+  const sayilar = input.split(',').map(Number);
+  if (sayilar.some(isNaN)) {
+    document.getElementById('result').innerHTML = "⚠️ Lütfen sadece sayı giriniz!";
+    return;
+  }
+  const sirali = quickSort(sayilar);
+  document.getElementById('result').innerHTML = "✅ Sıralı Sayılar: " + sirali.join(', ');
+}
+</script>
+
+</body>
+</html>
