@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Öğrenci Listesi</title>
+  <style>
+    :root{
+      --bg:#f7f8fb; --card:#ffffff; --accent:#2563eb;
+      --muted:#6b7280; --danger:#ef4444;
+    }
+    *{box-sizing:border-box;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+    body{margin:0;background:var(--bg);color:#111;padding:24px;display:flex;justify-content:center}
+    .container{width:100%;max-width:920px}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+    h1{margin:0;font-size:20px}
+    .card{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 6px 18px rgba(16,24,40,0.06)}
+    form{display:flex;gap:12px;flex-wrap:wrap;align-items:end}
+    label{display:block;font-size:13px;color:var(--muted)}
+    .field{display:flex;flex-direction:column;flex:1;min-width:160px}
+    input[type="text"], input[type="number"]{
+      padding:10px 12px;border-radius:8px;border:1px solid #e6e9ef;font-size:14px;
+    }
+    .actions{display:flex;gap:8px}
+    button{
+      padding:10px 14px;border-radius:10px;border:0;background:var(--accent);color:#fff;font-weight:600;
+      cursor:pointer;font-size:14px;
+    }
+    button.ghost{background:transparent;border:1px solid #e6e9ef;color:#111;font-weight:600}
+    button.danger{background:var(--danger)}
+    table{width:100%;border-collapse:collapse;margin-top:16px}
+    th,td{padding:10px 12px;text-align:left;border-bottom:1px solid #f1f3f7}
+    th{font-size:13px;color:var(--muted)}
+    .no-data{padding:22px;text-align:center;color:var(--muted)}
+    .small{font-size:13px;color:var(--muted)}
+    .count{font-weight:600}
+    @media(max-width:640px){
+      form{flex-direction:column;align-items:stretch}
+      .actions{justify-content:stretch}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Öğrenci Listesi — Ana Sayfa</h1>
+      <div class="small">Toplam: <span id="studentCount" class="count">0</span></div>
+    </header>
+
+    <div class="card" aria-live="polite">
+      <!-- Form -->
+      <form id="addForm" onsubmit="return false;">
+        <div class="field">
+          <label for="name">Öğrenci Adı Soyadı</label>
+          <input id="name" type="text" placeholder="Örn: Ahmet Yılmaz" autocomplete="name" />
+        </div>
+
+        <div class="field">
+          <label for="schoolNo">Okul No</label>
+          <input id="schoolNo" type="text" inputmode="numeric" placeholder="Örn: 12345" />
+        </div>
+
+        <div class="actions">
+          <button id="addBtn" type="button">Ekle</button>
+          <button id="clearBtn" class="ghost" type="button">Hepsini Temizle</button>
+        </div>
+      </form>
+
+      <!-- Liste -->
+      <div id="listWrapper" style="margin-top:16px;">
+        <table id="studentsTable" aria-describedby="studentCount">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>İsim</th>
+              <th>Okul No</th>
+              <th>İşlem</th>
+            </tr>
+          </thead>
+          <tbody id="studentsBody">
+            <!-- JS dolduracak -->
+          </tbody>
+        </table>
+        <div id="noData" class="no-data" style="display:none;">Henüz öğrenci yok. Yukarıdan ekleyin.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const STORAGE_KEY = 'ogrenci_listesi_v1';
+      const form = document.getElementById('addForm');
+      const nameInput = document.getElementById('name');
+      const noInput = document.getElementById('schoolNo');
+      const addBtn = document.getElementById('addBtn');
+      const clearBtn = document.getElementById('clearBtn');
+      const tableBody = document.getElementById('studentsBody');
+      const noDataEl = document.getElementById('noData');
+      const countEl = document.getElementById('studentCount');
+
+      let students = [];
+
+      // Yükle (localStorage)
+      function load(){
+        try{
+          const raw = localStorage.getItem(STORAGE_KEY);
+          students = raw ? JSON.parse(raw) : [];
+          if(!Array.isArray(students)) students = [];
+        }catch(e){
+          students = [];
+          console.error('load error', e);
+        }
+        render();
+      }
+
+      function save(){
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+        render();
+      }
+
+      function render(){
+        tableBody.innerHTML = '';
+        if(students.length === 0){
+          document.getElementById('studentsTable').style.display = 'table';
+          noDataEl.style.display = 'block';
+        } else {
+          noDataEl.style.display = 'none';
+        }
+
+        students.forEach((s, idx) => {
+          const tr = document.createElement('tr');
+
+          const tdIndex = document.createElement('td');
+          tdIndex.textContent = idx + 1;
+          tr.appendChild(tdIndex);
+
+          const tdName = document.createElement('td');
+          tdName.textContent = s.name;
+          tr.appendChild(tdName);
+
+          const tdNo = document.createElement('td');
+          tdNo.textContent = s.schoolNo;
+          tr.appendChild(tdNo);
+
+          const tdAction = document.createElement('td');
+          const delBtn = document.createElement('button');
+          delBtn.className = 'ghost';
+          delBtn.textContent = 'Sil';
+          delBtn.title = 'Öğrenciyi sil';
+          delBtn.addEventListener('click', () => {
+            if(confirm(`"${s.name}" adlı öğrenciyi silmek istediğinize emin misiniz?`)){
+              students = students.filter(x => x.id !== s.id);
+              save();
+            }
+          });
+          tdAction.appendChild(delBtn);
+          tr.appendChild(tdAction);
+
+          tableBody.appendChild(tr);
+        });
+
+        countEl.textContent = students.length;
+      }
+
+      function validInputs(name, no){
+        if(!name || name.trim().length < 2){
+          alert('Lütfen geçerli bir isim girin (en az 2 karakter).');
+          return false;
+        }
+        if(!no || no.trim().length === 0){
+          alert('Lütfen okul numarası girin.');
+          return false;
+        }
+        // opsiyonel: sadece rakam kontrolü
+        // if(!/^\d+$/.test(no.trim())){ alert('Okul numarası sadece rakamlardan oluşmalıdır.'); return false; }
+        return true;
+      }
+
+      addBtn.addEventListener('click', () => {
+        const name = nameInput.value.trim();
+        const schoolNo = noInput.value.trim();
+
+        if(!validInputs(name, schoolNo)) return;
+
+        // Aynı okul numarası zaten varsa uyar (opsiyonel)
+        const exists = students.some(s => s.schoolNo === schoolNo);
+        if(exists){
+          if(!confirm('Bu okul numarasına sahip bir öğrenci zaten var. Yine eklemek istiyor musunuz?')) return;
+        }
+
+        const newStudent = {
+          id: Date.now().toString() + Math.random().toString(16).slice(2),
+          name,
+          schoolNo
+        };
+        students.push(newStudent);
+        save();
+
+        // Formu temizle ve odağı isme ver
+        nameInput.value = '';
+        noInput.value = '';
+        nameInput.focus();
+      });
+
+      // Enter tuşuyla ekleme (okul_no alanındayken)
+      [nameInput, noInput].forEach(el => {
+        el.addEventListener('keydown', (e) => {
+          if(e.key === 'Enter'){
+            e.preventDefault();
+            addBtn.click();
+          }
+        });
+      });
+
+      clearBtn.addEventListener('click', () => {
+        if(students.length === 0){
+          alert('Liste boş.');
+          return;
+        }
+        if(confirm('Tüm öğrencileri silmek istediğinize emin misiniz? Bu işlem geri alınamaz.')){
+          students = [];
+          save();
+        }
+      });
+
+      // İlk yükleme
+      load();
+    })();
+  </script>
+</body>
+</html>
