@@ -1,3 +1,54 @@
+Bilgisayarındaki bir projeyi bu GitHub deposuna bağlamak
+
+Eğer proje bilgisayarında hazırsa (örnek: masaüstünde bir klasör var) ve bunu bu mevcut depoya yüklemek (bağlamak) istiyorsan:
+
+🔹 1. Terminali aç
+
+Proje klasörüne gir:
+
+cd "C:\Users\halil\Desktop\web"
+
+🔹 2. Git başlat (eğer yoksa)
+git init
+
+🔹 3. Dosyaları ekle
+git add .
+
+🔹 4. İlk commit oluştur
+git commit -m "İlk yükleme"
+
+🔹 5. GitHub bağlantısını ekle
+git remote add origin https://github.com/halil2023/web.git
+
+
+Eğer zaten “origin” var hatası verirse, önce eski bağlantıyı sil:
+
+git remote remove origin
+git remote add origin https://github.com/halil2023/web.git
+
+🔹 6. Ana dalı ayarla
+git branch -M main
+
+🔹 7. GitHub’a gönder
+git push -u origin main
+
+🔑 Giriş isterse:
+
+GitHub artık şifre kabul etmiyor, o yüzden Personal Access Token kullanmalısın.
+
+GitHub’da oluşturmak için:
+
+GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
+
+“Generate new token → classic”
+
+“repo” kutusunu işaretle
+
+Token’ı kopyala
+
+Terminalde kullanıcı adı = GitHub kullanıcı adın
+Şifre = Token (yapıştır)
+
 Yani bu depo ile bilgisayarında çalışmak, değişiklik yapmak, güncellemek (push/pull) istiyorsun.
 Aşağıda bu depoyla ilgili tüm temel Git işlemlerini adım adım ve çalışır şekilde verdim 👇
 
