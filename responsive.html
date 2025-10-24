@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Responsive Web Sayfası Örneği</title>
+<style>
+/* 🔹 GENEL AYARLAR */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  line-height: 1.6;
+}
+
+/* 🔹 ÜST MENÜ (NAVBAR) */
+header {
+  background-color: #0077b6;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+nav ul li {
+  margin: 10px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+/* 🔹 ANA BÖLÜM */
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.main .content {
+  flex: 2;
+  padding: 20px;
+}
+
+.main .content h2 {
+  color: #0077b6;
+  margin-bottom: 10px;
+}
+
+.main .content p {
+  font-size: 18px;
+  text-align: justify;
+}
+
+.main .image {
+  flex: 1;
+  padding: 20px;
+}
+
+.main .image img {
+  max-width: 100%;
+  border-radius: 10px;
+  height: auto;
+}
+
+/* 🔹 ALT KISIM (FOOTER) */
+footer {
+  background-color: #023e8a;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 20px;
+}
+
+/* 🔹 MEDYA SORGULARI (Responsive) */
+
+/* 📱 Telefonlar için */
+@media (max-width: 600px) {
+  header {
+    font-size: 18px;
+  }
+
+  nav ul {
+    flex-direction: column;
+  }
+
+  .main {
+    flex-direction: column;
+  }
+
+  .main .content, .main .image {
+    flex: 100%;
+    padding: 10px;
+  }
+
+  .main .content p {
+    font-size: 16px;
+  }
+}
+
+/* 💻 Tabletler için */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .main {
+    flex-direction: row;
+  }
+
+  .main .content {
+    flex: 3;
+  }
+
+  .main .image {
+    flex: 2;
+  }
+}
+
+/* 🖥️ Masaüstü için */
+@media (min-width: 1025px) {
+  .main .content p {
+    font-size: 20px;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Responsive Web Sayfası</h1>
+  <nav>
+    <ul>
+      <li><a href="#">Ana Sayfa</a></li>
+      <li><a href="#">Hakkında</a></li>
+      <li><a href="#">Hizmetler</a></li>
+      <li><a href="#">İletişim</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="main">
+  <div class="content">
+    <h2>Responsive Tasarım Nedir?</h2>
+    <p>
+      Responsive tasarım, bir web sitesinin farklı cihazlarda (telefon, tablet, masaüstü) 
+      sorunsuz bir şekilde görüntülenmesini sağlayan modern bir web tasarım yaklaşımıdır.
+      Bu sayede kullanıcı, ekran boyutu ne olursa olsun rahatça içeriğe erişebilir.
+    </p>
+  </div>
+
+  <div class="image">
+    <img src="https://picsum.photos/600/400" alt="Örnek Görsel">
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Responsive Web Tasarım Örneği | Tüm Hakları Saklıdır</p>
+</footer>
+
+</body>
+</html>
