@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML Temelleri Örnek Sayfa</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    table {
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    table, th, td {
+      border: 1px solid #555;
+      padding: 8px;
+    }
+    header, footer, nav, main, aside, section, article {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    progress {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>HTML Temelleri</h1>
+    <nav>
+      <a href="#metin">Metin</a> | 
+      <a href="#medya">Medya</a> |
+      <a href="#liste">Listeler</a> |
+      <a href="#form">Form</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="metin">
+      <h2>Metin Etiketleri</h2>
+      <p>Bu bir <strong>önemli</strong> paragraf. <em>Eğik</em> ve <u>altı çizili</u> metin örneği.</p>
+      <blockquote>Bu bir alıntıdır.</blockquote>
+      <code>console.log("Merhaba");</code>
+      <hr>
+    </section>
+
+    <section id="medya">
+      <h2>Bağlantılar ve Medya</h2>
+      <a href="https://www.example.com" target="_blank">Siteye Git</a><br>
+      <img src="https://via.placeholder.com/200" alt="Örnek Resim" width="200"><br>
+      <video src="video.mp4" controls width="300">Tarayıcınız video etiketini desteklemiyor.</video><br>
+      <audio src="ses.mp3" controls>Tarayıcınız ses etiketini desteklemiyor.</audio><br>
+      <iframe src="https://www.example.com" width="300" height="150"></iframe>
+      <hr>
+    </section>
+
+    <section id="liste">
+      <h2>Listeler</h2>
+      <ul>
+        <li>Elma</li>
+        <li>Armut</li>
+      </ul>
+      <ol>
+        <li>Birinci</li>
+        <li>İkinci</li>
+      </ol>
+      <dl>
+        <dt>HTML</dt>
+        <dd>Bir işaretleme dili</dd>
+      </dl>
+      <hr>
+    </section>
+
+    <section>
+      <h2>Tablo</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ali</td>
+            <td>Kaya</td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+    </section>
+
+    <section id="form">
+      <h2>Form</h2>
+      <form>
+        <label for="ad">Ad:</label>
+        <input type="text" id="ad" name="ad" placeholder="Adınızı girin" required><br><br>
+
+        <label for="sehir">Şehir:</label>
+        <select id="sehir" name="sehir">
+          <option>İstanbul</option>
+          <option>Ankara</option>
+        </select><br><br>
+
+        <textarea name="mesaj" rows="4" placeholder="Mesajınız..."></textarea><br><br>
+        
+        <button type="submit">Gönder</button>
+      </form>
+      <hr>
+    </section>
+
+    <aside>
+      <h2>Kenar Bilgisi</h2>
+      <p>Bu bir aside (kenar) alanıdır.</p>
+    </aside>
+
+    <section>
+      <h2>Diğer Etiketler</h2>
+      <progress value="50" max="100"></progress><br><br>
+      <details>
+        <summary>Daha Fazla Bilgi</summary>
+        Bu içerik gizliydi.
+      </details>
+      <time datetime="2025-09-12">12 Eylül 2025</time>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 HTML Temelleri Örneği
+  </footer>
+
+</body>
+</html>
